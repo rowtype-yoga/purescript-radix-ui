@@ -45,7 +45,8 @@ with radix-ui =
           , "web-dom"
           , "web-html"
           ]
-      , repo = 
+    , repo = 
           "https://github.com/rowtype-yoga/purescript-radix-ui.git" 
-        , version = "main"
+    , version = "main"
+    }
 ```
