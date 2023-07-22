@@ -1,9 +1,11 @@
 import * as Dialog from '@radix-ui/react-dialog';
 
-export const dialogOverlay = Dialog.Overlay;
-export const dialogContent = Dialog.Content;
-export const dialogTitle = Dialog.Title;
-export const dialogDescription = Dialog.Description;
-export const dialogTrigger = Dialog.Trigger;
-export const dialogClose = Dialog.Close;
-export const dialogRoot = Dialog.Root;
+export const overlayImpl = Dialog.Overlay;
+export const contentImpl = Dialog.Content;
+export const titleImpl = Dialog.Title;
+export const descriptionImpl = Dialog.Description;
+export const triggerImpl = Dialog.Trigger;
+export const closeImpl = Dialog.Close;
+export const rootImpl = Dialog.Root;
+export const actionImpl = Dialog.Action;
+export const portalImpl = Dialog.Portal;
