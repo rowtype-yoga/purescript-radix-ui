@@ -10,8 +10,7 @@ import Type.Proxy (Proxy(Proxy))
 import Data.Undefined.NoProblem (Opt, opt, pseudoMap)
 import Data.Undefined.NoProblem.Closed (class Coerce, coerce)
 import Record.Builder (build, insert, modify) as RB
-import Beta.DOM.Internal (CSS)
-
+import Beta.DOM.Internal (class IsJSX, CSS)
 
 foreign import collapsibleRootImpl :: forall a. ReactComponent { | a }
 foreign import collapsibleTriggerImpl :: forall a. ReactComponent { | a }
@@ -27,7 +26,7 @@ type RootProps =
   , disabled :: Opt Boolean
   }
 
-root :: forall p. Coerce p RootProps => p -> Array JSX -> JSX
+root :: forall p kids. IsJSX kids => Coerce p RootProps => p -> kids -> JSX
 root props kids = React.element collapsibleRootImpl
   $ (coerce props :: RootProps) # RB.build
       ( RB.modify (Proxy :: _ "onOpenChange") (pseudoMap mkEffectFn1)
@@ -38,10 +37,10 @@ type TriggerProps =
   { asChild :: Opt Boolean
   }
 
-trigger :: forall p. Coerce p TriggerProps => p -> JSX -> JSX
-trigger props kid = React.element collapsibleTriggerImpl
+trigger :: forall p kids. IsJSX kids => Coerce p TriggerProps => p -> kids -> JSX
+trigger props kids = React.element collapsibleTriggerImpl
   $ (coerce props :: TriggerProps) # RB.build
-      ( RB.insert (Proxy :: _ "children") kid
+      ( RB.insert (Proxy :: _ "children") kids
       )
 
 type ContentProps =
@@ -49,7 +48,7 @@ type ContentProps =
   , forceMount :: Opt Boolean
   }
 
-content :: forall p. Coerce p ContentProps => p -> Array JSX -> JSX
+content :: forall p kids. IsJSX kids => Coerce p ContentProps => p -> kids -> JSX
 content props kids = React.element collapsibleContentImpl
   $ (coerce props :: ContentProps) # RB.build
       ( RB.insert (Proxy :: _ "children") kids
