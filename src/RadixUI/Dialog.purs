@@ -192,3 +192,22 @@ description props kids = React.element descriptionImpl $
     ( RB.insert (Proxy ∷ _ "children") kids
     )
 
+-- | The type of the DialogClose component props
+type DialogCloseProps =
+  { asChild ∷
+      Opt Boolean -- ^ Whether to render the alert dialog description as a child of the dialog content
+  , className ∷
+      Opt String -- ^ The CSS class name of the alert dialog description
+  , style ∷ Opt CSS -- ^ The CSS style of the alert dialog description
+  }
+
+-- | The foreign component for the DialogClose
+foreign import closeImpl ∷ ∀ a. ReactComponent { | a }
+
+-- | A PureScript wrapper for the DialogClose component
+close ∷
+  ∀ p kids. Coerce p DialogCloseProps ⇒ IsJSX kids ⇒ p → kids → JSX
+close props kids = React.element closeImpl $
+  (coerce props ∷ DialogCloseProps) # RB.build
+    ( RB.insert (Proxy ∷ _ "children") kids
+    )
