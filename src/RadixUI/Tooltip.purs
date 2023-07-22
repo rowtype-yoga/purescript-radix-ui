@@ -135,7 +135,8 @@ type ArrowProps =
 
 foreign import arrowImpl ∷ ∀ a. ReactComponent { | a }
 
-arrow ∷ ∀ p. Coerce p ArrowProps ⇒ p → JSX
-arrow props = React.element arrowImpl
-  $ (coerce props ∷ ArrowProps)
+arrow ∷ ∀ p kids. IsJSX kids => Coerce p ArrowProps ⇒ p → kids -> JSX
+arrow props kids = React.element arrowImpl
+  $ (coerce props ∷ ArrowProps)# RB.build
+      ( RB.insert (Proxy :: Proxy "children") kids)
 
