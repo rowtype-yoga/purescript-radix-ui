@@ -25,16 +25,17 @@ type RootProps =
   }
 
 x = React.element
+
 -- | The foreign component for the Dialog
 foreign import rootImpl ∷ ∀ a. ReactComponent { | a }
 
 -- | A PureScript wrapper for the Dialog component
-root ∷
-  ∀ p.
-  Coerce p RootProps ⇒
-  p →
-  Array JSX →
-  JSX
+root
+  ∷ ∀ p
+  . Coerce p RootProps
+  ⇒ p
+  → Array JSX
+  → JSX
 root props kids = React.element rootImpl $
   (coerce props ∷ RootProps) # RB.build
     ( RB.modify (Proxy ∷ _ "onOpenChange") (pseudoMap mkEffectFn1)
@@ -51,8 +52,8 @@ type DialogTriggerProps =
 foreign import triggerImpl ∷ ∀ a. ReactComponent { | a }
 
 -- | A PureScript wrapper for the DialogTrigger component
-trigger ∷
-  ∀ p kids. Coerce p DialogTriggerProps ⇒ IsJSX kids ⇒ p → kids → JSX
+trigger
+  ∷ ∀ p kids. Coerce p DialogTriggerProps ⇒ IsJSX kids ⇒ p → kids → JSX
 trigger props kids = React.element triggerImpl $
   (coerce props ∷ DialogTriggerProps) # RB.build
     ( RB.insert (Proxy ∷ _ "children") kids
@@ -60,18 +61,16 @@ trigger props kids = React.element triggerImpl $
 
 -- | The type of the DialogPortal component props
 type DialogPortalProps =
-  { forceMount ∷
-      Opt Boolean -- ^ Whether to force mount the alert dialog portal in the DOM even when it is not open
-  , container ∷
-      Opt HTMLElement -- ^ The container element to mount the alert dialog portal into
+  { forceMount ∷ Opt Boolean -- ^ Whether to force mount the alert dialog portal in the DOM even when it is not open
+  , container ∷ Opt HTMLElement -- ^ The container element to mount the alert dialog portal into
   }
 
 -- | The foreign component for the DialogPortal
 foreign import portalImpl ∷ ∀ a. ReactComponent { | a }
 
 -- | A PureScript wrapper for the DialogPortal component
-portal ∷
-  ∀ p kids. Coerce p DialogPortalProps ⇒ IsJSX kids ⇒ p → kids → JSX
+portal
+  ∷ ∀ p kids. Coerce p DialogPortalProps ⇒ IsJSX kids ⇒ p → kids → JSX
 portal props kids = React.element portalImpl $
   (coerce props ∷ DialogPortalProps) # RB.build
     ( RB.insert (Proxy ∷ _ "children") kids
@@ -91,8 +90,8 @@ type DialogOverlayProps =
 foreign import overlayImpl ∷ ∀ a. ReactComponent { | a }
 
 -- | A PureScript wrapper for the DialogOverlay component
-overlay ∷
-  ∀ p kids. Coerce p DialogOverlayProps ⇒ IsJSX kids ⇒ p → kids → JSX
+overlay
+  ∷ ∀ p kids. Coerce p DialogOverlayProps ⇒ IsJSX kids ⇒ p → kids → JSX
 overlay props kids = React.element overlayImpl $
   (coerce props ∷ DialogOverlayProps) # RB.build
     ( RB.insert (Proxy ∷ _ "children") kids
@@ -118,8 +117,8 @@ type DialogContentProps =
 foreign import contentImpl ∷ ∀ a. ReactComponent { | a }
 
 -- | A PureScript wrapper for the DialogContent component
-content ∷
-  ∀ p kids. Coerce p DialogContentProps ⇒ IsJSX kids ⇒ p → kids → JSX
+content
+  ∷ ∀ p kids. Coerce p DialogContentProps ⇒ IsJSX kids ⇒ p → kids → JSX
 content props kids = React.element contentImpl $
   (coerce props ∷ DialogContentProps) # RB.build
     (
@@ -136,23 +135,6 @@ type DialogCancelProps =
       Opt Boolean -- ^ Whether to render the alert dialog cancel button as a child of the dialog content
   }
 
--- | The type of the DialogAction component props
-type DialogActionProps =
-  { asChild ∷
-      Opt Boolean -- ^ Whether to render the alert dialog action button as a child of the dialog content
-  }
-
--- | The foreign component for the DialogAction
-foreign import actionImpl ∷ ∀ a. ReactComponent { | a }
-
--- | A PureScript wrapper for the DialogAction component
-action ∷
-  ∀ p kids. Coerce p DialogActionProps ⇒ IsJSX kids ⇒ p → kids → JSX
-action props kids = React.element actionImpl $
-  (coerce props ∷ DialogActionProps) # RB.build
-    ( RB.insert (Proxy ∷ _ "children") kids
-    )
-
 -- | The type of the DialogTitle component props
 type DialogTitleProps =
   { asChild ∷
@@ -165,8 +147,8 @@ type DialogTitleProps =
 foreign import titleImpl ∷ ∀ a. ReactComponent { | a }
 
 -- | A PureScript wrapper for the DialogTitle component
-title ∷
-  ∀ p kids. Coerce p DialogTitleProps ⇒ IsJSX kids ⇒ p → kids → JSX
+title
+  ∷ ∀ p kids. Coerce p DialogTitleProps ⇒ IsJSX kids ⇒ p → kids → JSX
 title props kids = React.element titleImpl $
   (coerce props ∷ DialogTitleProps) # RB.build
     ( RB.insert (Proxy ∷ _ "children") kids
@@ -185,8 +167,8 @@ type DialogDescriptionProps =
 foreign import descriptionImpl ∷ ∀ a. ReactComponent { | a }
 
 -- | A PureScript wrapper for the DialogDescription component
-description ∷
-  ∀ p kids. Coerce p DialogDescriptionProps ⇒ IsJSX kids ⇒ p → kids → JSX
+description
+  ∷ ∀ p kids. Coerce p DialogDescriptionProps ⇒ IsJSX kids ⇒ p → kids → JSX
 description props kids = React.element descriptionImpl $
   (coerce props ∷ DialogDescriptionProps) # RB.build
     ( RB.insert (Proxy ∷ _ "children") kids
@@ -205,8 +187,8 @@ type DialogCloseProps =
 foreign import closeImpl ∷ ∀ a. ReactComponent { | a }
 
 -- | A PureScript wrapper for the DialogClose component
-close ∷
-  ∀ p kids. Coerce p DialogCloseProps ⇒ IsJSX kids ⇒ p → kids → JSX
+close
+  ∷ ∀ p kids. Coerce p DialogCloseProps ⇒ IsJSX kids ⇒ p → kids → JSX
 close props kids = React.element closeImpl $
   (coerce props ∷ DialogCloseProps) # RB.build
     ( RB.insert (Proxy ∷ _ "children") kids

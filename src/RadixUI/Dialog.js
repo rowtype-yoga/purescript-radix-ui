@@ -7,5 +7,4 @@ export const descriptionImpl = Dialog.Description;
 export const triggerImpl = Dialog.Trigger;
 export const closeImpl = Dialog.Close;
 export const rootImpl = Dialog.Root;
-export const actionImpl = Dialog.Action;
 export const portalImpl = Dialog.Portal;
