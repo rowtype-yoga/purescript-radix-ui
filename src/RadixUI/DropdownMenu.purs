@@ -253,9 +253,10 @@ type DropdownMenuArrowProps =
 foreign import arrowImpl :: forall a. ReactComponent { | a }
 
 -- | A PureScript wrapper for the DropdownMenuArrow component
-arrow :: forall p. Coerce p DropdownMenuArrowProps => p -> JSX
-arrow props = React.element arrowImpl
-  $ (coerce props :: DropdownMenuArrowProps)
+arrow ∷ ∀ p kids. IsJSX kids => Coerce p DropdownMenuArrowProps ⇒ p → kids -> JSX
+arrow props kids = React.element arrowImpl
+  $ (coerce props ∷ DropdownMenuArrowProps)# RB.build
+      ( RB.insert (Proxy :: Proxy "children") kids)
 
 -- | The type of the DropdownMenuSub component props
 type DropdownMenuSubProps =
