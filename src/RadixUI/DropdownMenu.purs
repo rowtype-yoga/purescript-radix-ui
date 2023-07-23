@@ -247,6 +247,7 @@ separator props = React.element separatorImpl
 type DropdownMenuArrowProps =
   { className :: Opt String -- ^ The CSS class name of the menu arrow
   , style :: Opt CSS -- ^ The CSS style of the menu arrow
+  , asChild :: Opt Boolean -- ^ Whether to render the menu arrow as a child of the menu content
   }
 
 -- | The foreign component for the DropdownMenuArrow
