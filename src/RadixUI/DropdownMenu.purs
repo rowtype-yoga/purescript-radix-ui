@@ -9,7 +9,7 @@ import Effect.Uncurried (EffectFn1, mkEffectFn1)
 import Prim.Row (class Union)
 import React.Basic (JSX, ReactComponent)
 import React.Basic (element) as React
-import React.Basic.Events (SyntheticEvent)
+import React.Basic.Events (EventHandler, SyntheticEvent)
 import Record.Builder (build, insert, modify) as RB
 import Record.Unsafe (unsafeSet)
 import Record.Unsafe.Union (unsafeUnion)
@@ -86,9 +86,10 @@ content props kids = React.element contentImpl
 type DropdownMenuItemProps =
   { disabled :: Opt Boolean -- ^ Whether the menu item is disabled or not
   , onSelect ::
-      Opt (SyntheticEvent -> Effect Unit) -- ^ A callback function that is called when the menu item is selected by a pointer or keyboard event
+      Opt EventHandler -- ^ A callback function that is called when the menu item is selected by a pointer or keyboard event
   , className :: Opt String -- ^ The CSS class name of the menu item
   , style :: Opt CSS -- ^ The CSS style of the menu item
+  , asChild :: Opt Boolean
   }
 
 -- | The foreign component for the DropdownMenuItem
@@ -98,9 +99,9 @@ foreign import itemImpl :: forall a. ReactComponent { | a }
 item :: forall p kids. Coerce p DropdownMenuItemProps => IsJSX kids => p -> kids -> JSX
 item props kids = React.element itemImpl
   $ (coerce props :: DropdownMenuItemProps) # RB.build
-      ( RB.modify (Proxy :: _ "onSelect") (pseudoMap mkEffectFn1)
-          <<< RB.insert (Proxy :: _ "children") kids
-      )
+--      ( RB.modify (Proxy :: _ "onSelect") (pseudoMap mkEffectFn1) <<<
+          (RB.insert (Proxy :: _ "children") kids)
+--      )
 
 -- | The type of the DropdownMenuItemIndicator component props
 type DropdownMenuItemIndicatorProps =
