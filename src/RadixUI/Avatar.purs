@@ -20,6 +20,8 @@ foreign import fallbackImpl :: forall r. ReactComponent { | r }
 
 type RootProps =
   { asChild :: Opt Boolean
+  , className :: Opt String
+  , style :: Opt CSS
   }
 
 root :: forall p kids. Coerce p RootProps => IsJSX kids => p -> kids -> JSX
@@ -42,6 +44,8 @@ toImageLoadingStatus = case _ of
 
 type ImageProps =
   { asChild :: Opt Boolean
+  , className :: Opt String
+  , style :: Opt CSS
   , onLoadingStatusChange :: Opt (ImageLoadingStatus -> Effect Unit)
   }
 
@@ -56,6 +60,8 @@ image props' kids = do
 type FallbackProps =
   { asChild :: Opt Boolean
   , delayMs :: Opt Milliseconds
+  , className :: Opt String
+  , style :: Opt CSS
   }
 
 fallback :: forall p kids. Coerce p FallbackProps => IsJSX kids => p -> kids -> JSX
