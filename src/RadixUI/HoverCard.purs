@@ -19,6 +19,7 @@ import Data.Tuple.Nested ((/\))
 import Control.Monad.Identity.Trans (runIdentityT)
 import Beta.DOM.Internal (CSS)
 import Beta.DOM (class IsJSX)
+import Data.Time.Duration (Milliseconds)
 
 -- The type of the HoverCard component props
 type RootProps =
@@ -26,6 +27,8 @@ type RootProps =
   , onOpenChange ::
       Opt (Boolean -> Effect Unit) -- ^ A callback function that is called when the HoverCard open state changes
   , className :: Opt String -- ^ The CSS class name of the HoverCard
+  , openDelay :: Opt Milliseconds -- ^ The duration from when the mouse enters the trigger until the hover card opens
+  , closeDelay :: Opt Milliseconds -- ^ The duration from when the mouse leaves the trigger until the hover card closes
   , style :: Opt CSS -- ^ The CSS style of the HoverCard
   }
 
