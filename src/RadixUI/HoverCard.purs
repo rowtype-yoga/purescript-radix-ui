@@ -20,6 +20,7 @@ import Control.Monad.Identity.Trans (runIdentityT)
 import Beta.DOM.Internal (CSS)
 import Beta.DOM (class IsJSX)
 import Data.Time.Duration (Milliseconds)
+import Web.HTML.HTMLElement (HTMLElement)
 
 -- The type of the HoverCard component props
 type RootProps =
@@ -92,7 +93,8 @@ arrow props kids = React.element arrowImpl
 
 -- The type of the portal component props
 type HoverCardPortalProps =
-  {}
+  { container :: Opt HTMLElement -- ^ The DOM element to render the portal into
+  }
 
 -- The foreign component for the HoverCard portal
 foreign import portalImpl :: forall a. ReactComponent { | a }
