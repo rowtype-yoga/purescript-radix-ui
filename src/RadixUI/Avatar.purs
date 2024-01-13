@@ -45,6 +45,8 @@ toImageLoadingStatus = case _ of
 type ImageProps =
   { asChild :: Opt Boolean
   , className :: Opt String
+  , src :: Opt String
+  , alt :: Opt String
   , style :: Opt CSS
   , onLoadingStatusChange :: Opt (ImageLoadingStatus -> Effect Unit)
   }
