@@ -51,12 +51,11 @@ type ImageProps =
   , onLoadingStatusChange :: Opt (ImageLoadingStatus -> Effect Unit)
   }
 
-image :: forall p kids. Coerce p ImageProps => IsJSX kids => p -> kids -> JSX
-image props' kids = do
+image :: forall p. Coerce p ImageProps => p -> JSX
+image props' = do
   let props = coerce props' :: ImageProps
   React.element imageImpl $ props
     { onLoadingStatusChange = pseudoMap (mkEffectFn1 <<< (toImageLoadingStatus >>> _)) props.onLoadingStatusChange }
-    # unsafeWithChildren kids
 
 
 type FallbackProps =
