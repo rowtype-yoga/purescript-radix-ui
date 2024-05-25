@@ -1,18 +1,20 @@
 module RadixUI.Avatar where
 
 import Prelude
-import React.Basic (JSX, ReactComponent)
+
+import Beta.DOM (class IsJSX)
+import Beta.DOM (unsafeWithChildren)
+import Beta.DOM.Internal (CSS)
+import Beta.DOM.Internal (class IsJSX)
+import Data.Time.Duration (Milliseconds)
 import Data.Undefined.NoProblem (Opt, pseudoMap)
 import Data.Undefined.NoProblem.Closed (class Coerce, coerce)
-import React.Basic (element) as React
-import Data.Time.Duration (Milliseconds)
 import Effect (Effect)
-import Beta.DOM.Internal (CSS)
-import Beta.DOM (class IsJSX)
-import Effect.Uncurried (mkEffectFn1)
+import Effect.Uncurried (EffectFn1, mkEffectFn1)
 import Partial.Unsafe (unsafeCrashWith)
-import Beta.DOM (unsafeWithChildren)
-import Beta.DOM.Internal (class IsJSX)
+import React.Basic (JSX, ReactComponent)
+import React.Basic (element) as React
+import Unsafe.Coerce (unsafeCoerce)
 
 foreign import rootImpl :: forall r. ReactComponent { | r }
 foreign import imageImpl :: forall r. ReactComponent { | r }
@@ -54,8 +56,9 @@ type ImageProps =
 image :: forall p. Coerce p ImageProps => p -> JSX
 image props' = do
   let props = coerce props' :: ImageProps
-  React.element imageImpl $ props
-    { onLoadingStatusChange = pseudoMap (mkEffectFn1 <<< (toImageLoadingStatus >>> _)) props.onLoadingStatusChange }
+  React.element imageImpl $ unsafeCoerce $ props
+    { onLoadingStatusChange = pseudoMap (mkEffectFn1 <<< (toImageLoadingStatus >>> _)) props.onLoadingStatusChange :: Opt (EffectFn1 String Unit)
+    }
 
 
 type FallbackProps =
